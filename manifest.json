@@ -2,11 +2,12 @@
     "name": "cumulus",
     "version": "1.0",
     "description": "soundcloud extension",
-    "permissions": ["declarativeContent", "storage"],
+    "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
+    "options_page": "options.html",
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -16,6 +17,12 @@
             "128": "images/get_started128.png"
         }
     },
+    "content_scripts": [
+        {
+            "matches": ["https://*.soundcloud.com/*"],
+            "js": ["contentscript.js"]
+        }
+    ],
     "icons": {
         "16": "images/get_started16.png",
         "32": "images/get_started32.png",
