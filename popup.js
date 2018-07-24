@@ -1,4 +1,5 @@
 let changeColor = document.getElementById('changeColor');
+let getinfoBtn = document.getElementById('getinfo');
 let songTitle = document.getElementById('songTitle');
 let songArtist = document.getElementById('songArtist');
 
@@ -14,4 +15,8 @@ changeColor.onclick = function(element) {
             tabs[0].id,
             {code: 'document.body.style.backgroundColor = "' + color + '";'});
     })
+}
+
+getinfoBtn.onclick = function(element) {
+    console.log("popup.onclick");
 }
