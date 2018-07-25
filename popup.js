@@ -19,4 +19,5 @@ changeColor.onclick = function(element) {
 
 getinfoBtn.onclick = function(element) {
     console.log("popup.onclick");
+    console.log("see if this works");
 }
