@@ -3,6 +3,7 @@ let getinfoBtn = document.getElementById('getinfo');
 let songTitle = document.getElementById('songTitle');
 let songArtist = document.getElementById('songArtist');
 
+/*
 chrome.storage.sync.get('color', function(data) {
     changeColor.style.backgroundColor = data.color;
     changeColor.setAttribute('value', data.color);
@@ -18,6 +19,19 @@ changeColor.onclick = function(element) {
 }
 
 getinfoBtn.onclick = function(element) {
-    console.log("popup.onclick");
     console.log("see if this works");
 }
+*/
+
+console.log("popup.js is in");
+
+// Listen for contentscript.js
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        console.log(sender.tab ? 
+                    "from a content script: " + sender.tab.url :
+                    "from the extension");
+        if (request.greeting == "hello") {
+            sendResponse({farewell: "goodbye"});
+        }
+});

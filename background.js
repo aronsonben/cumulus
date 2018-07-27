@@ -19,11 +19,5 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-chrome.pageAction.onClicked.addListener(function (tab) {
-    console.log("onclicked");
-    //if(url === tab.url) {
-    //    chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, domStuff);
-    //}
-});
 
     

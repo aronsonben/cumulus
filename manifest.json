@@ -9,11 +9,10 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://*.soundcloud.com/*"],
+            "matches": ["https://soundcloud.com/tio574/following"],
             "js": ["contentscript.js"]
         }
     ],
-    "options_page": "options.html",
     "page_action": {
         "default_title": "cumulus",
         "default_popup": "popup.html",
