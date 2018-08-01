@@ -1,16 +1,14 @@
-var port = chrome.runtime.connect();
+var port = chrome.runtime.connect({name: "knockknock"}),
+    joke = {joke: "Knock knock"};
 
-//alert(document.getElementById("playbackSoundBadge_titleContextContainer"));
 
-chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-    console.log(response);
+port.postMessage(joke);
+console.log(joke);
+port.onMessage.addListener(function(msg) {
+    console.log(port.name+": "+msg.question);
+    if (msg.question == "Who's there?") {
+        port.postMessage({answer: "Madame"});
+    } else if (msg.question == "Madame who?") {
+        port.postMessage({answer:"Madame... Bovary"});
+    }
 });
-
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      console.log(sender.tab ?
-                  "from a content script:" + sender.tab.url :
-                  "from the extension");
-      if (request.greeting == "hello")
-        sendResponse({farewell: "goodbye"});
-    });

@@ -1,4 +1,5 @@
-var url = "https://soundcloud.com/tio574/following";
+var url = "https://soundcloud.com/tio574/following",
+    port = chrome.runtime.connect({name: "knockknock"});
 
 function domStuff(domContent) {
     console.log('DOM content:\n' + domContent);
@@ -19,5 +20,17 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-
-    
+chrome.runtime.onConnect.addListener(function(port) {
+    console.assert(port.name == "knockknock");
+    port.onMessage.addListener(function(msg) {
+        console.log(port.name+": "+msg.joke+", "+msg.answer);
+        if (msg.joke == "Knock knock") {
+            console.log("found 'Knock knock'");
+            port.postMessage({question: "Who's there?"});
+        } else if (msg.answer == "Madame") {
+            port.postMessage({question: "Madame who?"});
+        } else if (msg.answer == "Madame... Bovary") {
+            port.postMessage({question: "I don't get it."});
+        }
+    });
+});
