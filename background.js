@@ -22,15 +22,27 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.runtime.onConnect.addListener(function(port) {
     console.assert(port.name == "knockknock");
-    port.onMessage.addListener(function(msg) {
-        console.log(port.name+": "+msg.joke+", "+msg.answer);
-        if (msg.joke == "Knock knock") {
-            console.log("found 'Knock knock'");
-            port.postMessage({question: "Who's there?"});
-        } else if (msg.answer == "Madame") {
-            port.postMessage({question: "Madame who?"});
-        } else if (msg.answer == "Madame... Bovary") {
-            port.postMessage({question: "I don't get it."});
-        }
-    });
+    if(port.name == "knocknock") {
+        port.onMessage.addListener(function(msg) {
+            console.log(port.name+": "+msg.joke+", "+msg.answer);
+            if (msg.joke == "Knock knock") {
+                console.log("found 'Knock knock'");
+                port.postMessage({question: "Who's there?"});
+            } else if (msg.answer == "Madame") {
+                port.postMessage({question: "Madame who?"});
+            } else if (msg.answer == "Madame... Bovary") {
+                port.postMessage({question: "I don't get it."});
+            }
+        });
+    }
+    if(port.name == "infoport") {
+        port.onMessage.addListener(function(msg) {
+            console.log(port.name+": "+msg.artist);
+        });
+    }
 });
+
+
+// chrome.pageAction.onClicked.addListener(function(tab) {
+//     chrome.tabs.sendMessage(tab.id, {text: "report_back"}, domStuff);
+// });

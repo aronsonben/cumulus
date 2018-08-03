@@ -1,6 +1,7 @@
 {
+    "manifest_version": 2,
     "name": "cumulus",
-    "version": "1.0",
+    "version": "0.1",
     "description": "soundcloud extension",
     "permissions": ["activeTab", "tabs", "declarativeContent", "storage"],
     "background": {
@@ -9,7 +10,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://soundcloud.com/tio574/following"],
+            "matches": ["https://soundcloud.com/*"],
             "js": ["contentscript.js"]
         }
     ],
