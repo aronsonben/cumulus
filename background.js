@@ -21,7 +21,6 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
-    console.assert(port.name == "knockknock");
     if(port.name == "knocknock") {
         port.onMessage.addListener(function(msg) {
             console.log(port.name+": "+msg.joke+", "+msg.answer);
