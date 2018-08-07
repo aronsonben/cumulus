@@ -1,14 +1,15 @@
 var port = chrome.runtime.connect({name: "knockknock"}),
     infoport = chrome.runtime.connect({name: "infoport"}),
+    port0 = chrome.runtime.connect({name: "content"}),
     joke = {joke: "Knock knock"},
     playback = document.getElementsByClassName("playbackSoundBadge__titleContextContainer"),
-    playArtist = document.querySelector("div.playbackSoundBadge__titleContextContainer");
+    playArtist = document.querySelector(".playbackSoundBadge__titleContextContainer");
 
 
 port.postMessage(joke);
 console.log(joke);
 
-console.log(document.querySelector("div.playbackSoundBadge__titleContextContainer"));
+console.log(playback);
 
 //let info = getPlayInfo();
 //console.log(info);
@@ -35,6 +36,17 @@ function getPlayInfo() {
     songInfo = {artist: playArtist.title, title: playTitle.title};
     return songInfo;
 }
+
+window.addEventListener("message", function (event) {
+    if(event.source != window) 
+        return;
+    
+    if(event.data.type && (event.data.type == "FROM_PAGE")) {
+        console.log("Content script received: " + event.data.text);
+        port.postMessage(event.data.text);
+    }
+})
+
 
 // chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 //     console.log("listening");
