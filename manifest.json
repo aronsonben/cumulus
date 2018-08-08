@@ -14,6 +14,7 @@
             "js": ["contentscript.js"]
         }
     ],
+    "web_accessible_resources": ["script.js"],
     "page_action": {
         "default_title": "cumulus",
         "default_popup": "popup.html",
