@@ -1,26 +1,31 @@
-var s = document.createElement('script');
+/*var s = document.createElement('script');
 s.src = chrome.extension.getURL('script.js');
 (document.head||document.documentElement).appendChild(s);
 s.onload = function() {
     s.parentNode.removeChild(s);
 }
-
+*/
 
 ////////////////////////////////////////
 var port = chrome.runtime.connect({name: "knockknock"}),
     infoport = chrome.runtime.connect({name: "infoport"}),
     port0 = chrome.runtime.connect({name: "content"}),
     joke = {joke: "Knock knock"},
-    playback = document.getElementsByClassName("playbackSoundBadge__titleContextContainer"),
+    playback = document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0],
     playArtist = document.querySelector(".playbackSoundBadge__titleContextContainer");
-
-    
 //port.postMessage(joke);
 //console.log(joke);
 //console.log(playback);
 //let info = getPlayInfo();
 //console.log(info);
 //infoport.postMessage(info);
+
+
+window.onload = function() {
+    console.log(document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0].value);
+}
+
+
 
 
 port.onMessage.addListener(function(msg) {
