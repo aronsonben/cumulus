@@ -1,7 +1,10 @@
 # cumulus
 soundcloud chrome extension
 
-roadmap:
+Currently if you go to a user's "following" list and you click on the lazy loading list it will populate the space beneath their names with that user's tracks and followers. This is helpful for finding new artists (to me, at least).
+
+
+##### old roadmap:
 -store data for future display:
 {
     artist: xxx
