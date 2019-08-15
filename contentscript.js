@@ -20,9 +20,90 @@ var port = chrome.runtime.connect({name: "knockknock"}),
 //console.log(info);
 //infoport.postMessage(info);
 
+var gottenFollowers = false;
 
-window.onload = function() {
-    console.log(document.getElementsByClassName("playbackSoundBadge__titleContextContainer")[0].value);
+// window.onload = function() {
+//     getFollowers();
+// }
+console.log(document.getElementsByClassName("l-main g-main-scroll-area")[0]);
+var list = document.getElementsByClassName("l-main g-main-scroll-area")[0];
+
+list.addEventListener("click", clickListOnce, false);
+list.addEventListener("click", clickListTwice, false);
+list.addEventListener("click", clickListThrice, true);
+
+
+
+function getFollowers() {
+    var followingUsers = document.getElementsByClassName("userBadgeListItem__heading");
+    for(var i=0; i < followingUsers.length; i++) {
+        // console.log(followingUsers[i]);
+        let link = followingUsers[i].href;
+        let parent = followingUsers[i].parentElement;
+        console.log(parent);
+        if(parent.lastElementChild.className != "cumulusInfo") {
+            let artistInfo = getInfoFromArtistUrl(link, i);
+        } else {
+            console.log("CONTAINS $$$");
+        }
+    }
+}
+
+function getInfoFromArtistUrl(link, index) {
+    // get follower count from user page
+    var xhr = new XMLHttpRequest();
+    var artistInfoWeWant;
+    var finalArtistInfo;
+    console.log(link);
+    xhr.open('GET', link, true);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(xhr.responseText, "text/html");
+            var elem = doc.getElementsByName("description");
+            var description; 
+            if(elem != null) {
+                description = elem[0];
+            }
+            var content = description.getAttribute("content");
+            // subtract 4 from start of tracks since max that someone could have would be triple digits
+            var startOfTracks = content.indexOf("Tracks. ") - 4;
+            artistInfoWeWant = content.substring(startOfTracks, content.indexOf(" Stream"));
+            var artistInfoTrimmed = artistInfoWeWant.trim().substring(0, 4).replace('.', '').replace('T','');
+            finalArtistInfo = artistInfoTrimmed.concat(artistInfoWeWant.substring(4, artistInfoWeWant.length));
+            console.log("artistInfo: " + finalArtistInfo);
+
+            placeInfoToDOM(finalArtistInfo, index);
+        }
+    } 
+}
+
+
+function placeInfoToDOM(info, index) {
+    console.log("placin info: " + info);
+    var followingUsersNames = document.getElementsByClassName("userBadgeListItem__title");
+    var infoDiv = document.createElement("div");
+    infoDiv.className = "cumulusInfo";
+    var infoText = document.createTextNode(info);
+    infoDiv.appendChild(infoText);
+    followingUsersNames[index].appendChild(infoDiv);
+}
+
+
+
+
+function clickListOnce(evt) {
+    console.log('clicked list once');
+}
+
+function clickListTwice(evt) {
+    console.log('clicked list twice');
+}
+
+function clickListThrice(evt) {
+    console.log('clicked list thrice, launching getFollowers()');
+    getFollowers();
 }
 
 
